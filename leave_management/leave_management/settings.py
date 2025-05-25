@@ -114,9 +114,10 @@ USE_TZ = True
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    # 'app.backends.UserSiteAuthBackend',
+    'app.backends.UserSiteAuthBackend',
 ]
 
+AUTH_USER_MODEL = 'app.CustomUser'
 
 
 # Static files (CSS, JavaScript, Images)

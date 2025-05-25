@@ -1,9 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django import forms
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from .models import LeaveRequest
-
+from .models import CustomUser, LeaveRequest
 
 
 class CustomLoginForm(AuthenticationForm):
@@ -16,9 +14,24 @@ class CustomLoginForm(AuthenticationForm):
         "class": "form-control",
     }))
 
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'password']
 
 
 class CustomRegisterForm(forms.ModelForm):
+    # Define company roles for the dropdown
+    COMPANY_ROLES = [
+        # Blank choice for optional selection
+        ('', 'Select a role'),
+        ('Employee', 'Employee'),
+        ('Manager', 'Manager'),
+        ('HR', 'HR'),
+        ('Team Lead', 'Team Lead'),
+        ('Director', 'Director'),
+        ('Executive', 'Executive'),
+    ]
+
     password = forms.CharField(
         label="",
         widget=forms.PasswordInput(attrs={
@@ -33,10 +46,18 @@ class CustomRegisterForm(forms.ModelForm):
             "class": "form-control",
         })
     )
+    role = forms.ChoiceField(
+        label="",
+        choices=COMPANY_ROLES,
+        required=True,
+        widget=forms.Select(attrs={
+            "class": "form-control",
+        })
+    )
 
     class Meta:
-        model = User
-        fields = ['username', 'email']
+        model = CustomUser
+        fields = ['username', 'email', 'role']
         widgets = {
             'username': forms.TextInput(attrs={
                 "placeholder": "Enter your username",
@@ -50,6 +71,7 @@ class CustomRegisterForm(forms.ModelForm):
         labels = {
             'username': '',
             'email': '',
+            'role': '',
         }
 
     def clean(self):
@@ -65,9 +87,11 @@ class CustomRegisterForm(forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password"])
+        user.is_admin = False  # Ensure is_admin is False for registered users
         if commit:
             user.save()
         return user
+
 
 class LeaveRequestForm(forms.ModelForm):
     class Meta:

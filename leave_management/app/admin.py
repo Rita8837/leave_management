@@ -1,36 +1,46 @@
 from django.contrib import admin
-from .models import UserProfile, LeaveRequest
+from django.contrib.auth.admin import UserAdmin
+from .models import CustomUser, LeaveRequest
 
-@admin.register(UserProfile)
-class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'role')
-    search_fields = ('user__username', 'user__email', 'department', 'role')
-    ordering = ('user__username',)
-    readonly_fields = ('user',)
+
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
+    list_display = ('username', 'email', 'role', 'is_admin', 'is_staff')
+    search_fields = ('username', 'email', 'role')
+    ordering = ('username',)
+    readonly_fields = ('created_at', 'updated_at')
+
+    # Customize fields displayed in the admin form
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        ('Personal info', {
+         'fields': ('first_name', 'last_name', 'email', 'role')}),
+        ('Permissions', {'fields': ('is_admin', 'is_staff',
+         'is_superuser', 'groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login',
+         'date_joined', 'created_at', 'updated_at')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'email', 'role', 'is_admin', 'password1', 'password2'),
+        }),
+    )
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        return queryset.select_related('user')  # Optimize queries
+        return queryset  # No need for select_related since CustomUser has no ForeignKey
+
 
 @admin.register(LeaveRequest)
 class LeaveRequestAdmin(admin.ModelAdmin):
-    list_display = ('user', 'leave_type', 'start_date', 'end_date', 'status', 'created_at')
-    list_filter = ('status', 'leave_type', 'user')
-    search_fields = ('user__username', 'reason')
+    list_display = ('user', 'leave_type', 'status', 'start_date', 'end_date')
+    search_fields = ('user__username', 'user__email', 'leave_type', 'status')
+    list_filter = ('leave_type', 'status')
     ordering = ('-created_at',)
-    date_hierarchy = 'created_at'
-    actions = ['approve_requests', 'reject_requests']
+    readonly_fields = ('created_at', 'updated_at')
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        return queryset.select_related('user')  # Optimize queries
-
-    def approve_requests(self, request, queryset):
-        queryset.update(status='APPROVED')
-        self.message_user(request, "Selected leave requests have been approved.")
-    approve_requests.short_description = "Approve selected leave requests"
-
-    def reject_requests(self, request, queryset):
-        queryset.update(status='REJECTED')
-        self.message_user(request, "Selected leave requests have been rejected.")
-    reject_requests.short_description = "Reject selected leave requests"
+        # Optimize queries for ForeignKey to CustomUser
+        return queryset.select_related('user')
