@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    /* General styling */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7fa;
+        color: #333;
+    }
+
+    h2 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        font-size: 2rem;
+        font-weight: 600;
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    /* Form styling */
+    .leave-form {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    .leave-form p {
+        margin-bottom: 15px;
+    }
+
+    .leave-form label {
+        display: block;
+        font-weight: 500;
+        color: #2c3e50;
+        margin-bottom: 5px;
+        font-size: 0.95rem;
+    }
+
+    .leave-form input,
+    .leave-form select,
+    .leave-form textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .leave-form input:focus,
+    .leave-form select:focus,
+    .leave-form textarea:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+    }
+
+    .leave-form textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+
+    /* Submit button */
+    .submit-btn {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .submit-btn:hover {
+        background-color: #2980b9;
+        transform: translateY(-2px);
+    }
+
+    /* Alert styling for messages */
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        font-size: 0.95rem;
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    .alert-success {
+        background-color: #dff0d8;
+        color: #27ae60;
+        border: 1px solid #27ae60;
+    }
+
+    .alert-error {
+        background-color: #f2dede;
+        color: #c0392b;
+        border: 1px solid #c0392b;
+    }
+
+    /* Animation keyframes */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .leave-form {
+            padding: 15px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        .submit-btn {
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<h2>Apply for Leave</h2>
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<form method="post" class="leave-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="submit-btn">Submit</button>
+</form>
+
+{% block extra_js %}
+<script>
+    // Optional: Add focus animation for form fields
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('.leave-form');
+        form.classList.add('fade-in');
+    });
+</script>
+{% endblock %}
+{% endblock %}
