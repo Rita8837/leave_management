@@ -1,0 +1,6 @@
+run App : python manage.py runserver
+
+For migrations: 
+python manage.py makemigrations app
+then
+python manage.py migrate

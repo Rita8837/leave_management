@@ -85,12 +85,29 @@
         text-align: center;
         animation: fadeIn 0.5s ease-in;
         animation-delay: 0.2s;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+    .panel:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(52, 152, 219, 0.4);
     }
 
     .panel h4 {
         color: #2c3e50;
         font-size: 1.2rem;
         margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-weight: 600;
+    }
+
+    .panel h4 i {
+        font-size: 1.5rem;
+        color: #3498db;
     }
 
     .panel p {
@@ -134,40 +151,60 @@
     }
 </style>
 
+<!-- Add FontAwesome CDN for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
 <div class="dashboard-container">
     <!-- Sidebar -->
     <div class="sidebar">
         <h3>Admin Dashboard</h3>
         <ul>
-            <li><a href="#">Dashboard</a></li>
+            <li><a href="{% url 'admin_dashboard' %}">Dashboard</a></li>
             <li><a href="#">Users</a></li>
-            <li><a href="#">Leave Requests</a></li>
+            <li><a href="{% url 'admin_leave_list' %}">Leave Requests</a></li>
             <li><a href="#">Reports</a></li>
-            <li><a href="#">Settings</a></li>
+            <li><a href="{% url 'notifications' %}">Notifications</a></li>
+            <li><a href="{% url 'settings' %}">Settings</a></li>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
         </ul>
     </div>
 
     <!-- Main content -->
     <div class="main-content">
         <h2>Welcome, Admin!</h2>
-        <div class="dashboard-panels">
-            <div class="panel">
-                <h4>Overview</h4>
-                <p>View key metrics and system status.</p>
+            <div class="dashboard-panels">
+                <div class="panel">
+                    <h4><i class="fa-solid fa-chart-pie"></i> Overview</h4>
+                    <p>View key metrics and system status.</p>
+                </div>
+                <div class="panel">
+                    <h4><i class="fa-solid fa-file-lines"></i> Leave Requests</h4>
+                    <p>Manage pending and past leave requests.</p>
+                </div>
+                <div class="panel">
+                    <h4><i class="fa-solid fa-users"></i> Users</h4>
+                    <p>Manage user accounts and permissions.</p>
+                </div>
+                <div class="panel">
+                    <h4><i class="fa-solid fa-chart-line"></i> Reports</h4>
+                    <p>Generate reports and analytics.</p>
+                </div>
+                <div class="panel">
+                    <h4><i class="fa-solid fa-bell"></i> Notifications</h4>
+                    <p>View system notifications and alerts.</p>
+                    <a href="{% url 'notifications' %}" class="btn btn-primary mt-2">View Notifications</a>
+                </div>
+                <div class="panel">
+                    <h4><i class="fa-solid fa-gear"></i> Settings</h4>
+                    <p>Configure system preferences and options.</p>
+                    <a href="{% url 'settings' %}" class="btn btn-primary mt-2">Settings</a>
+                </div>
+                <div class="panel">
+                    <h4><i class="fa-solid fa-user"></i> Profile</h4>
+                    <p>View and edit your profile information.</p>
+                    <a href="{% url 'profile' %}" class="btn btn-primary mt-2">View Profile</a>
+                </div>
             </div>
-            <div class="panel">
-                <h4>Leave Requests</h4>
-                <p>Manage pending and past leave requests.</p>
-            </div>
-            <div class="panel">
-                <h4>Users</h4>
-                <p>Manage user accounts and permissions.</p>
-            </div>
-            <div class="panel">
-                <h4>Reports</h4>
-                <p>Generate reports and analytics.</p>
-            </div>
-        </div>
     </div>
 </div>
 

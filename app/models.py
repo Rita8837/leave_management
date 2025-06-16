@@ -64,3 +64,15 @@ class LeaveRequest(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+
+
+class Notification(models.Model):
+    user = models.ForeignKey(
+        CustomUser, on_delete=models.CASCADE, related_name='notifications')
+    message = models.TextField()
+    url = models.URLField(blank=True, null=True)  # New URL field for redirection
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Notification for {self.user.get_full_name()} - Read: {self.is_read}"

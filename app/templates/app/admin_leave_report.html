@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Leave Requests Report</h2>
+
+<h3>Status Counts</h3>
+<table border="1">
+    <tr>
+        <th>Status</th>
+        <th>Count</th>
+    </tr>
+    {% for item in status_counts %}
+    <tr>
+        <td>{{ item.status }}</td>
+        <td>{{ item.count }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h3>Leave Type Counts</h3>
+<table border="1">
+    <tr>
+        <th>Leave Type</th>
+        <th>Count</th>
+    </tr>
+    {% for item in type_counts %}
+    <tr>
+        <td>{{ item.leave_type }}</td>
+        <td>{{ item.count }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

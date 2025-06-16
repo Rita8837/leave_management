@@ -1,9 +1,10 @@
 from django.urls import path
-from .views.auth import login_view, landing_page, register_view, home_view, logout_view, admin_dashboard_view
+from .views.auth import login_view, landing_page, register_view, home_view, logout_view, admin_dashboard_view, profile_view, settings_view
 from .views.leave import apply_leave, my_leaves
 from django.contrib import admin
 from django.views.decorators.csrf import csrf_exempt
-from .views.admin import admin_leave_list
+from .views.admin import admin_leave_list, admin_leave_report
+from .views.notifications import notifications_view
 
 admin.site.login = csrf_exempt(admin.site.login)
 
@@ -19,5 +20,9 @@ urlpatterns = [
     path('apply_leave/', apply_leave, name='apply_leave'),
     # URL for viewing leave requests
     path('my_leaves/', my_leaves, name='my_leaves'),
-    path('admin_leave_list/', admin_leave_list, name='admin_leave_list')
+    path('admin_leave_list/', admin_leave_list, name='admin_leave_list'),
+    path('admin_leave_report/', admin_leave_report, name='admin_leave_report'),
+    path('notifications/', notifications_view, name='notifications'),
+    path('profile/', profile_view, name='profile'),
+    path('settings/', settings_view, name='settings'),
 ]

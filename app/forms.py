@@ -103,3 +103,25 @@ class LeaveRequestForm(forms.ModelForm):
             'leave_type': forms.Select(),
             'reason': forms.Textarea(attrs={'rows': 4}),
         }
+
+
+class CustomUserChangeForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'role']
+        widgets = {
+            'username': forms.TextInput(attrs={
+                "class": "form-control",
+            }),
+            'email': forms.EmailInput(attrs={
+                "class": "form-control",
+            }),
+            'role': forms.Select(attrs={
+                "class": "form-control",
+            }),
+        }
+        labels = {
+            'username': 'Username',
+            'email': 'Email',
+            'role': 'Role',
+        }

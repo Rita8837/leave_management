@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Your Notifications</h2>
+
+{% if notifications %}
+<ul class="list-group">
+    {% for notification in notifications %}
+    <li class="list-group-item d-flex justify-content-between align-items-center {% if not notification.is_read %}list-group-item-danger{% else %}list-group-item-success{% endif %}">
+        <a href="{{ notification.url|default:'#' }}" class="flex-grow-1 text-decoration-none {% if not notification.is_read %}fw-bold{% endif %}">
+            {{ notification.message }}
+        </a>
+        <span class="badge rounded-circle {% if not notification.is_read %}bg-danger{% else %}bg-success{% endif %}" style="width: 15px; height: 15px;"></span>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No notifications.</p>
+{% endif %}
+
+{% endblock %}

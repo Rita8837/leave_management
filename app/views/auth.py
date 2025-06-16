@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
-from ..forms import CustomLoginForm, CustomRegisterForm
+from ..forms import CustomLoginForm, CustomRegisterForm, CustomUserChangeForm
 from ..models import CustomUser
 from django.views.decorators.csrf import csrf_exempt
 
@@ -72,3 +72,21 @@ def logout_view(request):
 @csrf_exempt
 def admin_dashboard_view(request):
     return render(request, 'app/admin_dashboard.html')
+
+
+@login_required
+def profile_view(request):
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = CustomUserChangeForm(instance=request.user)
+    return render(request, 'app/profile.html', {'form': form})
+
+
+@login_required
+def settings_view(request):
+    # Placeholder for settings page logic
+    return render(request, 'app/settings.html')
