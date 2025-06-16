@@ -1,3 +1,6 @@
+
+
+
 """
 Django settings for leave_management project.
 
@@ -43,21 +46,11 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-LANGUAGES = [
-    ('en', 'English'),
-    ('sw', 'Swahili'),
-]
-
-LOCALE_PATHS = [
-    BASE_DIR / 'locale',
 ]
 
 ROOT_URLCONF = 'leave_management.urls'
