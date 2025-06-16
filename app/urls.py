@@ -5,6 +5,8 @@ from django.contrib import admin
 from django.views.decorators.csrf import csrf_exempt
 from .views.admin import admin_leave_list, admin_leave_report
 from .views.notifications import notifications_view
+from .views.static_pages import about_view, contact_view, help_view, privacy_view
+from django.conf.urls.i18n import set_language
 
 admin.site.login = csrf_exempt(admin.site.login)
 
@@ -23,6 +25,11 @@ urlpatterns = [
     path('admin_leave_list/', admin_leave_list, name='admin_leave_list'),
     path('admin_leave_report/', admin_leave_report, name='admin_leave_report'),
     path('notifications/', notifications_view, name='notifications'),
-    path('profile/', profile_view, name='profile'),
+    path('about/', about_view, name='about'),
+    path('contact/', contact_view, name='contact'),
+    path('help/', help_view, name='help'),
+    path('privacy/', privacy_view, name='privacy'),
     path('settings/', settings_view, name='settings'),
+    path('profile/', profile_view, name='profile'),
+    path('i18n/setlang/', set_language, name='set_language'),
 ]

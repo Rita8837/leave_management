@@ -1,8 +1,9 @@
+{% load i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{% get_current_language %}">
 <head>
     <meta charset="UTF-8">
-    <title>Leave Management System</title>
+    <title>{% trans "Leave Management System" %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -115,16 +116,16 @@
 
     <div class="container hero">
         <div class="card shadow-lg animate__animated animate__fadeInUp">
-            <h1 class="display-4">Welcome to the Leave Management System</h1>
-            <p class="lead">Streamline employee leave requests, approvals, and tracking with our intuitive platform.</p>
+            <h1 class="display-4">{% trans "Welcome to the Leave Management System" %}</h1>
+            <p class="lead">{% trans "Streamline employee leave requests, approvals, and tracking with our intuitive platform." %}</p>
             <div class="feature-icons animate__animated animate__fadeIn" style="animation-delay: 0.3s;">
-                <img src="https://img.icons8.com/ios-filled/50/calendar.png" alt="Calendar">
-                <img src="https://img.icons8.com/ios-filled/50/checklist.png" alt="Checklist">
-                <img src="https://img.icons8.com/ios-filled/50/user.png" alt="Team">
+                <img src="https://img.icons8.com/ios-filled/50/calendar.png" alt="{% trans "Calendar" %}">
+                <img src="https://img.icons8.com/ios-filled/50/checklist.png" alt="{% trans "Checklist" %}">
+                <img src="https://img.icons8.com/ios-filled/50/user.png" alt="{% trans "Team" %}">
             </div>
             <div class="mt-4">
-                <a href="{% url 'login' %}" class="btn btn-primary">Get Started</a>
-                <a href="{% url 'register' %}" class="btn btn-outline-secondary">Sign Up</a>
+                <a href="{% url 'login' %}" class="btn btn-primary">{% trans "Get Started" %}</a>
+                <a href="{% url 'register' %}" class="btn btn-outline-secondary">{% trans "Sign Up" %}</a>
             </div>
         </div>
     </div>
